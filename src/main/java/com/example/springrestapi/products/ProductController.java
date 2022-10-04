@@ -49,4 +49,23 @@ public class ProductController {
     }
 
 
+    //Wieder suchen wir nach productId in Pfad und in RequestBody wie für PUT üblich UpdateInformation
+    //Wenn product in Datenbank gefunden, Update möglich
+    //Ich ersetze die Werte der aus der Datenbank geholten Product durch das hier initiierte Produkt
+    //Wichtig: was wir hier speichern mit dem save muss auch die productInstanz, die wie hier
+    // aus der Datenbank holen weil Hibernate dadurch quasi eine Referenz speichert.
+    // und wenn wir das nicht tun (bspw das productUpdate in das save tun),
+    // wird Hibernate neue Instanz in Tabelle einfügen, das wollen wir nicht, sondern existierende updaten
+    @PutMapping("/{productId}")
+    public void updateProduct(@PathVariable Long productId, @RequestBody Product productUpdate) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(!product.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+        }
+    Product productInstance = product.get();
+    productInstance.setName(productUpdate.getName());
+    productInstance.setCostInEuro(productUpdate.getCostInEuro());
+    productRepository.save(productInstance);
+    }
+
 }
