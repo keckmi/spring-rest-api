@@ -68,4 +68,14 @@ public class ProductController {
     productRepository.save(productInstance);
     }
 
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if(product.isPresent()) {
+            productRepository.deleteById(productId);
+            return;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with this id not found");
+    }
+
 }
