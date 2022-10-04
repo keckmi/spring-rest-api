@@ -18,7 +18,7 @@ public class ProductController {
     //zum Beispiel in einem Formular (bei REST Schnittstellen (API) ist das im Json Format)
     //Spring geht dann daher, guckt in den RequestBody rein und versucht das dann in ein Product,
     //in eines unserer Java Objekte zu konvertieren
-    //und injiziert das ganze in unsere Methode hier rein
+    //und injiziert das ganze in unsere Methode (createProduct?) hier rein
     //und wir speichern das ganze dann. also das resultat von dieser serialisierung
     @PostMapping("")
     public void createProduct(@RequestBody Product product) {
